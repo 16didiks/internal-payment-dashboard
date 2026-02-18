@@ -1,38 +1,30 @@
 import axios from 'axios'
-import { useAuth } from '@/modules/auth/store'
-import router from '@/router'
+import router from '@/app/router'
+import { useAuthStore } from '@/modules/auth/store'
 
 const api = axios.create({
-  baseURL: 'https://api.example.com',
+  baseURL: import.meta.env.VITE_API_URL || '',
   headers: {
     'Content-Type': 'application/json'
   }
 })
 
-/**
- * Request Interceptor
- * Auto inject token
- */
 api.interceptors.request.use((config) => {
-  const { token } = useAuth()
+  const token = localStorage.getItem('token')
 
-  if (token.value) {
-    config.headers.Authorization = `Bearer ${token.value}`
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
   }
 
   return config
 })
 
-/**
- * Response Interceptor
- * Auto logout if 401
- */
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const { logout } = useAuth()
-      logout()
+      const authStore = useAuthStore()
+      authStore.logout()
       router.push('/login')
     }
 
