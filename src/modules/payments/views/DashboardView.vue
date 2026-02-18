@@ -7,8 +7,8 @@ import { useRouter } from 'vue-router'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppNavbar from '@/components/layout/AppNavbar.vue'
 import PaymentFilter from '@/components/payments/PaymentFilter.vue'
-import PaymentStats from '@/components/payments/PaymentStats.vue'
 import PaymentSummary from '@/components/payments/PaymentSummary.vue'
+import PaymentChart from '@/components/payments/PaymentChart.vue'
 import PaymentTable from '@/components/payments/PaymentTable.vue'
 import { ref } from 'vue'
 
@@ -47,7 +47,10 @@ const logout = () => {
       <main class="p-6 overflow-auto">
         <PaymentFilter v-model="selectedStatus" />
 
-        <template v-if="authStore.isOperation"> <PaymentSummary /> </template>
+        <template v-if="authStore.isOperation">
+          <PaymentSummary />
+          <PaymentChart /> </template
+        ><br />
 
         <PaymentTable />
       </main>

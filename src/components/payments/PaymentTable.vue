@@ -22,7 +22,9 @@ const getStatusClass = (status: string) => {
 
 <template>
   <div class="bg-white rounded-xl shadow">
-    <div class="p-4 border-b font-semibold">Payment List</div>
+    <div class="p-4 border-b font-semibold">
+      Payment List ({{ paymentStore.totalPayments }} results)
+    </div>
 
     <div v-if="paymentStore.loading" class="p-6 text-center text-gray-500">
       Loading payments...
